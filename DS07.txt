@@ -1,0 +1,101 @@
+//Implement a priority queue using arrays or linked lists.
+
+#include <stdio.h>
+
+#define MAX 5
+
+int pq[MAX];
+int size = 0;
+
+// Insert element in sorted order
+void enqueue(int value)
+{
+    int i;
+
+    if(size == MAX)
+    {
+        printf("Priority Queue Overflow\n");
+        return;
+    }
+
+    // Insert based on priority (smaller number = higher priority)
+    for(i = size - 1; i >= 0 && pq[i] > value; i--)
+    {
+        pq[i + 1] = pq[i];
+    }
+
+    pq[i + 1] = value;
+    size++;
+
+    printf("%d inserted\n", value);
+}
+
+// Delete highest priority element
+void dequeue()
+{
+    int i;
+
+    if(size == 0)
+    {
+        printf("Priority Queue Underflow\n");
+        return;
+    }
+
+    printf("%d deleted\n", pq[0]);
+
+    for(i = 0; i < size - 1; i++)
+    {
+        pq[i] = pq[i + 1];
+    }
+
+    size--;
+}
+
+// Display elements
+void display()
+{
+    int i;
+
+    if(size == 0)
+    {
+        printf("Priority Queue is Empty\n");
+    }
+    else
+    {
+        printf("Priority Queue Elements:\n");
+
+        for(i = 0; i < size; i++)
+        {
+            printf("%d ", pq[i]);
+        }
+    }
+
+    printf("\n");
+}
+
+int main()
+{
+    enqueue(30);
+    enqueue(10);
+    enqueue(50);
+    enqueue(20);
+
+    display();
+
+    dequeue();
+
+    display();
+
+    return 0;
+}
+
+ output
+30 inserted
+10 inserted
+50 inserted
+20 inserted
+Priority Queue Elements:
+10 20 30 50 
+10 deleted
+Priority Queue Elements:
+20 30 50 
